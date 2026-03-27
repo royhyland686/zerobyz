@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZeroByZ — Complete Redesign</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#05030a;
+  --white:#f5f0ff;
+  --purple:#7c3aed;
+  --plite:#a855f7;
+  --pglow:rgba(124,58,237,0.18);
+  --gray:#0f0a18;
+  --mid:#1a1228;
+  --border:#221832;
+  --muted:#7060a0;
+  --card:#0d0a16;
+  --red:#ff4566;
+  --amber:#f59e0b;
+  --green:#10b981;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden}
+
+/* ANN */
+.ann{background:linear-gradient(90deg,var(--purple),var(--plite),var(--purple));padding:9px;overflow:hidden;white-space:nowrap}
+.ann-t{display:inline-flex;gap:40px;animation:tick 22s linear infinite;font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#fff}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:68px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;background:rgba(5,3,10,.96);backdrop-filter:blur(16px)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:4px;color:var(--white);text-decoration:none}
+.logo em{color:var(--plite);font-style:normal}
+.nl{display:flex;gap:26px}
+.nl a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
+.nl a:hover,.nl a.on{color:var(--white)}
+.ncart{background:var(--purple);color:#fff;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:9px 20px;border-radius:3px;border:none;cursor:pointer;transition:background .2s}
+.ncart:hover{background:var(--plite)}
+
+/* HERO */
+.hero{min-height:92vh;display:grid;grid-template-columns:58% 42%;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 75% 50%,rgba(124,58,237,0.14),transparent 65%);pointer-events:none}
+.hero-l{display:flex;flex-direction:column;justify-content:center;padding:80px 60px;position:relative;z-index:2}
+.h-eye{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--plite);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.h-eye::before{content:'';width:28px;height:1px;background:var(--plite)}
+.h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,7vw,116px);line-height:.88;letter-spacing:2px;animation:fup .7s ease both}
+.h1 .acc{color:var(--plite);display:block}
+.h1 .sub{color:var(--muted);font-size:38%;display:block;letter-spacing:8px;margin-top:14px;line-height:1.4}
+.h-desc{font-size:15px;color:#8070b0;line-height:1.8;max-width:420px;margin:28px 0 40px;animation:fup .7s .15s ease both}
+.h-btns{display:flex;gap:12px;flex-wrap:wrap;animation:fup .7s .3s ease both}
+.btn-p{background:var(--purple);color:#fff;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:15px 34px;border-radius:3px;cursor:pointer;border:none;transition:background .2s,transform .15s}
+.btn-p:hover{background:var(--plite);transform:translateY(-2px)}
+.btn-g{background:transparent;color:var(--white);font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:15px 34px;border-radius:3px;cursor:pointer;border:1px solid var(--border);transition:all .2s}
+.btn-g:hover{border-color:var(--plite);color:var(--plite)}
+.h-tags{display:flex;gap:8px;margin-top:40px;flex-wrap:wrap;animation:fup .7s .45s ease both}
+.htag{font-size:11px;letter-spacing:1px;padding:6px 14px;border-radius:100px;border:1px solid var(--border);color:var(--muted)}
+.htag.hot{background:rgba(124,58,237,.12);border-color:var(--purple);color:var(--plite)}
+
+.hero-r{background:var(--gray);position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:3px}
+.hcell{overflow:hidden;position:relative;background:var(--mid)}
+.hcell img{width:100%;height:100%;object-fit:cover;transition:transform .5s;display:block}
+.hcell:hover img{transform:scale(1.07)}
+.hcell.tall{grid-row:span 2}
+.hcell-ov{position:absolute;bottom:0;left:0;right:0;padding:10px 12px;background:linear-gradient(transparent,rgba(5,3,10,.88))}
+.hcell-name{font-size:11px;font-weight:600;letter-spacing:.5px}
+.hcell-price{font-size:10px;color:var(--plite)}
+.hfb{width:100%;height:100%;min-height:160px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,var(--mid),var(--black))}
+.hfb span{font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:2px;color:#2a1845;text-align:center;padding:8px;line-height:1.6}
+@keyframes fup{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+/* TRUST */
+.trust{display:flex;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.ti{flex:1;padding:18px 12px;display:flex;align-items:center;justify-content:center;gap:8px;border-right:1px solid var(--border)}
+.ti:last-child{border-right:none}
+.ti-icon{font-size:17px}
+.ti-t{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+
+/* LAYOUT */
+.wrap{max-width:1180px;margin:0 auto;padding:0 40px}
+.sec-hd{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:32px}
+.sec-t{font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:2px;line-height:1}
+.sec-t span{color:var(--plite)}
+.sec-a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:2px;transition:all .2s}
+.sec-a:hover{color:var(--plite);border-color:var(--plite)}
+
+/* FILTERS */
+.filters{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap}
+.fb{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:7px 16px;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s}
+.fb:hover,.fb.on{background:var(--purple);color:#fff;border-color:var(--purple)}
+
+/* PRODUCTS */
+.psec{padding:72px 0}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.pc{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s;position:relative}
+.pc:hover{transform:translateY(-5px);border-color:var(--purple)}
+.pc-img{aspect-ratio:3/4;overflow:hidden;position:relative;background:var(--mid)}
+.pc-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s;display:block}
+.pc:hover .pc-img img{transform:scale(1.06)}
+.pfb{width:100%;height:100%;background:linear-gradient(145deg,var(--mid),var(--black));display:flex;align-items:center;justify-content:center}
+.pfb span{font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:2px;color:#2a1845;text-align:center;padding:12px;line-height:1.6}
+.pbadge{position:absolute;top:10px;left:10px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:2px;z-index:2}
+.b-new{background:var(--purple);color:#fff}
+.b-sold{background:rgba(0,0,0,.75);color:#555;border:1px solid #2a1832}
+.pc-hov{position:absolute;bottom:0;left:0;right:0;padding:10px;background:linear-gradient(transparent,rgba(5,3,10,.92));opacity:0;transition:opacity .25s;z-index:3}
+.pc:hover .pc-hov{opacity:1}
+.pc-atc{width:100%;background:var(--purple);color:#fff;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px;border:none;border-radius:3px;cursor:pointer}
+.pc-ntf{width:100%;background:transparent;color:#666;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:10px;border:1px solid #2a1832;border-radius:3px;cursor:pointer}
+.pc-info{padding:14px}
+.pc-cat{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--plite);opacity:.7;margin-bottom:4px}
+.pc-name{font-size:13px;font-weight:600;line-height:1.35;margin-bottom:6px}
+.pc-price{font-size:14px;font-weight:600;color:var(--white)}
+.pc-sizes{font-size:10px;color:var(--muted);margin-top:5px;letter-spacing:1px;text-transform:uppercase}
+.pc-notify{font-size:10px;color:var(--plite);margin-top:5px;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+.pc-notify:hover{text-decoration:underline}
+
+/* WELCOME BAND */
+.welcome{padding:80px 40px;background:var(--gray);border-top:1px solid var(--border);text-align:center;position:relative;overflow:hidden}
+.welcome::before{content:'ZEROBYZ';font-family:'Bebas Neue',sans-serif;font-size:240px;color:rgba(124,58,237,.03);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none}
+.wc-inner{max-width:820px;margin:0 auto;position:relative;z-index:2}
+.wc-tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--plite);margin-bottom:16px;display:inline-flex;align-items:center;gap:10px}
+.wc-tag::before,.wc-tag::after{content:'✦';font-size:10px}
+.wc-h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,5vw,88px);line-height:.9;letter-spacing:2px;margin-bottom:28px}
+.wc-h2 span{color:var(--plite)}
+.wc-body{font-size:16px;color:#8070b0;line-height:1.85;margin-bottom:36px}
+.wc-body strong{color:var(--white);font-weight:600}
+.wc-icons{display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap}
+.wc-icon{text-align:center}
+.wi-num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--plite);display:block}
+.wi-lbl{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px}
+
+/* COMMUNITY */
+.comm{padding:100px 0;background:linear-gradient(135deg,#0c0718,#160b2e,#0a0514);border-top:1px solid var(--border);position:relative;overflow:hidden;text-align:center}
+.comm::before{content:'COMMUNITY';font-family:'Bebas Neue',sans-serif;font-size:200px;color:rgba(124,58,237,.04);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;line-height:1}
+.comm-in{max-width:700px;margin:0 auto;padding:0 40px;position:relative;z-index:2}
+.comm-tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--plite);margin-bottom:16px;display:inline-flex;align-items:center;gap:10px}
+.comm-h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,6vw,96px);line-height:.9;letter-spacing:2px;margin-bottom:20px}
+.comm-h2 span{color:var(--plite)}
+.comm-p{font-size:15px;color:#8070b0;line-height:1.8;margin-bottom:40px}
+.comm-stats{display:flex;justify-content:center;gap:48px;margin-bottom:44px;flex-wrap:wrap}
+.cs{text-align:center}
+.cs-v{font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--plite);display:block}
+.cs-l{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.comm-form{display:flex;gap:10px;max-width:440px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+.comm-inp{flex:1;min-width:200px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:3px;padding:13px 16px;font-size:13px;color:var(--white);outline:none;transition:border-color .2s;font-family:'DM Sans',sans-serif}
+.comm-inp::placeholder{color:var(--muted)}
+.comm-inp:focus{border-color:var(--purple)}
+.comm-btn{background:var(--purple);color:#fff;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:13px 28px;border-radius:3px;cursor:pointer;border:none;transition:background .2s}
+.comm-btn:hover{background:var(--plite)}
+.comm-note{font-size:11px;color:var(--muted);margin-top:12px;letter-spacing:.5px}
+.soc-links{display:flex;justify-content:center;gap:16px;margin-top:32px;flex-wrap:wrap}
+.soc-link{font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:8px 18px;border-radius:100px;border:1px solid var(--border);color:var(--muted);text-decoration:none;transition:all .2s}
+.soc-link:hover{border-color:var(--purple);color:var(--plite)}
+
+/* BRAND STORY */
+.brand-sec{padding:96px 0;border-top:1px solid var(--border)}
+.brand-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.bl{order:2}.br{order:1}
+.b-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--plite);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.b-label::before{content:'';width:22px;height:1px;background:var(--plite)}
+.b-h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,5vw,76px);line-height:.95;letter-spacing:2px;margin-bottom:24px}
+.b-body{font-size:15px;color:#8070b0;line-height:1.8;margin-bottom:32px}
+.b-vis{background:var(--gray);border-radius:12px;aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:1px solid var(--border)}
+.bv-big{font-family:'Bebas Neue',sans-serif;font-size:180px;color:rgba(124,58,237,.05);line-height:1;pointer-events:none}
+.bv-tag{position:absolute;bottom:20px;right:20px;background:var(--purple);color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:7px 12px;border-radius:3px}
+.bv-t2{position:absolute;top:20px;left:20px;background:rgba(5,3,10,.88);border:1px solid var(--border);backdrop-filter:blur(8px);padding:10px 14px;border-radius:6px}
+.bv-t2-sub{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--plite);margin-bottom:3px}
+.bv-t2-val{font-size:14px;font-weight:600}
+
+/* AUDIT */
+.audit-sec{padding:80px 0;background:#07040e;border-top:1px solid var(--border)}
+.audit-head{text-align:center;margin-bottom:52px}
+.audit-scores{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);margin-bottom:48px}
+.as{background:var(--black);padding:22px;text-align:center}
+.as-v{font-family:'Bebas Neue',sans-serif;font-size:38px;display:block}
+.as-l{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.issues-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.iss{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color .2s}
+.iss:hover,.iss.open{border-color:var(--purple)}
+.iss-top{display:flex;align-items:center;gap:12px;padding:16px 18px}
+.ibadge{font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:3px;font-weight:600;white-space:nowrap}
+.bh{background:rgba(255,69,102,.12);color:var(--red);border:1px solid rgba(255,69,102,.25)}
+.bm{background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.25)}
+.bg{background:rgba(16,185,129,.12);color:var(--green);border:1px solid rgba(16,185,129,.25)}
+.iss-t{font-size:13px;font-weight:600;flex:1}
+.iss-arr{color:var(--muted);font-size:15px;transition:transform .2s}
+.iss.open .iss-arr{transform:rotate(90deg)}
+.iss-body{display:none;border-top:1px solid var(--border);padding:16px 18px}
+.iss.open .iss-body{display:block}
+.proof{background:#040210;border:1px solid var(--border);border-left:3px solid var(--plite);padding:12px 14px;margin-bottom:12px;font-size:12px;color:var(--muted);line-height:1.7;border-radius:0 6px 6px 0}
+.proof strong{color:var(--plite)}
+.iss-body p{font-size:13px;color:#7060a0;line-height:1.7;margin-bottom:10px}
+.fixes{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.fx{display:inline-flex;align-items:center;gap:5px;background:rgba(16,185,129,.08);color:var(--green);border:1px solid rgba(16,185,129,.2);border-radius:5px;font-size:11px;padding:4px 10px}
+.fx::before{content:'→'}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.cb{background:rgba(255,69,102,.06);border:1px solid rgba(255,69,102,.15);border-radius:7px;padding:12px}
+.cg{background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.15);border-radius:7px;padding:12px}
+.cb .cl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);margin-bottom:5px}
+.cg .cl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--green);margin-bottom:5px}
+.cb p{font-size:12px;color:#a06070}.cg p{font-size:12px;color:#50a080}
+
+/* WHY US */
+.why-sec{padding:80px 0;border-top:1px solid var(--border)}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:44px}
+.why{background:var(--black);padding:36px 28px;transition:background .2s}
+.why:hover{background:#080512}
+.why-n{font-family:'Bebas Neue',sans-serif;font-size:60px;color:rgba(124,58,237,.1);line-height:1;margin-bottom:14px}
+.why h4{font-size:14px;font-weight:700;margin-bottom:8px}
+.why p{font-size:13px;color:var(--muted);line-height:1.7}
+
+/* FOOTER */
+footer{background:#040210;border-top:1px solid var(--border);padding:56px 40px 36px}
+.ft{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;margin-bottom:44px}
+.fl{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;margin-bottom:12px}
+.fl em{color:var(--plite);font-style:normal}
+.fp{font-size:13px;color:var(--muted);line-height:1.7;max-width:240px}
+.fc h5{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#3a2555;margin-bottom:14px}
+.fc a{display:block;font-size:13px;color:#5a4070;text-decoration:none;margin-bottom:8px;transition:color .2s}
+.fc a:hover{color:var(--plite)}
+.fb{display:flex;align-items:center;justify-content:space-between;padding-top:22px;border-top:1px solid var(--border);font-size:11px;color:#3a2555;letter-spacing:1px}
+.fb .pink{color:var(--plite)}
+
+/* REDESIGN TAG */
+.rtag{position:fixed;bottom:20px;right:20px;background:var(--purple);color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:8px 14px;border-radius:4px;z-index:999;box-shadow:0 4px 24px rgba(124,58,237,.5)}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .pgrid{grid-template-columns:repeat(2,1fr)}
+  .hero{grid-template-columns:1fr}
+  .hero-r{display:none}
+  .hero-l{padding:56px 24px}
+  .brand-grid{grid-template-columns:1fr;gap:40px}
+  .bl,.br{order:unset}
+  .b-vis{display:none}
+  .issues-grid{grid-template-columns:1fr}
+  .ft{grid-template-columns:1fr 1fr}
+  .why-grid{grid-template-columns:1fr}
+  .audit-scores{grid-template-columns:repeat(3,1fr)}
+  nav{padding:0 20px}
+  .nl{display:none}
+  .wrap{padding:0 20px}
+  .trust{flex-wrap:wrap}
+  .ti{min-width:50%;border-bottom:1px solid var(--border)}
+  .comm-stats{gap:28px}
+}
+@media(max-width:500px){
+  .pgrid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .ft{grid-template-columns:1fr}
+  .cmp{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="rtag">✦ Redesign Concept</div>
+
+<!-- ── ANNOUNCEMENT BAR ── -->
+<div class="ann">
+  <div class="ann-t">
+    <span>FREE SHIPPING ON ALL ORDERS</span><span>✦</span>
+    <span>COD AVAILABLE PAN INDIA</span><span>✦</span>
+    <span>ORIGINAL ZEROBYZ ARTWORK — AHMEDABAD</span><span>✦</span>
+    <span>28 DROPS LIVE NOW</span><span>✦</span>
+    <span>FREE SHIPPING ON ALL ORDERS</span><span>✦</span>
+    <span>COD AVAILABLE PAN INDIA</span><span>✦</span>
+    <span>ORIGINAL ZEROBYZ ARTWORK — AHMEDABAD</span><span>✦</span>
+    <span>28 DROPS LIVE NOW</span><span>✦</span>
+  </div>
+</div>
+
+<!-- ── NAVIGATION ── -->
+<nav>
+  <a href="#" class="logo">ZERO<em>BYZ</em></a>
+  <div class="nl">
+    <a href="#" class="on">Home</a>
+    <a href="#products">Shop All</a>
+    <a href="#kurtas">Kurtas</a>
+    <a href="#tees">Tees</a>
+    <a href="#pants">Pants</a>
+    <a href="#community">Community</a>
+    <a href="#story">Our Story</a>
+  </div>
+  <button class="ncart" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Cart (0)</button>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-l">
+    <div class="h-eye">Ahmedabad Streetwear · Est. 2024</div>
+    <h1 class="h1">
+      STARTED
+      <span class="acc">FROM ZERO.</span>
+      <span class="sub">JUST LIKE ALL BIG THINGS DO</span>
+    </h1>
+    <p class="h-desc">A clothing brand from Ahmedabad that started from zero — just like all big things do! Every design has a meaning and a little story. Our designs are like secret messages — look closely, and you'll find something special in each one.</p>
+    <div class="h-btns">
+      <button class="btn-p" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop All Drops →</button>
+      <button class="btn-g" onclick="document.getElementById('community').scrollIntoView({behavior:'smooth'})">Join Community</button>
+    </div>
+    <div class="h-tags">
+      <span class="htag hot">🔥 New Drop Live</span>
+      <span class="htag">Free Shipping</span>
+      <span class="htag">COD Available</span>
+      <span class="htag">28 Products</span>
+      <span class="htag">Original Art</span>
+    </div>
+  </div>
+  <div class="hero-r">
+    <!-- 4 product preview cells -->
+    <div class="hcell tall">
+      <img src="https://www.zerobyz.com/cdn/shop/files/02_fc148a86-1823-4b9a-a286-3f8155624bac.webp?v=1765651218&width=640" alt="Never Been Normal" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+      <div class="hfb" style="display:none"><span>NEVER BEEN NORMAL</span></div>
+      <div class="hcell-ov"><div class="hcell-name">NEVER BEEN NORMAL</div><div class="hcell-price">Rs. 2,199</div></div>
+    </div>
+    <div class="hcell">
+      <img src="https://www.zerobyz.com/cdn/shop/files/01_27a0c5ef-2fb2-4b5f-bdae-11c5aec02383.png?v=1754114153&width=640" alt="Messy Kurta Orange" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+      <div class="hfb" style="display:none"><span>MESSY KURTA ORANGE</span></div>
+      <div class="hcell-ov"><div class="hcell-name">MESSY KURTA</div><div class="hcell-price">Rs. 1,550</div></div>
+    </div>
+    <div class="hcell">
+      <img src="https://www.zerobyz.com/cdn/shop/files/0-01-NEW2_1.png?v=1756617191&width=640" alt="Free Hug White" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+      <div class="hfb" style="display:none"><span>FREE HUG WHITE</span></div>
+      <div class="hcell-ov"><div class="hcell-name">FREE HUG</div><div class="hcell-price">Rs. 1,850</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRUST BAR ── -->
+<div class="trust">
+  <div class="ti"><span class="ti-icon">🚚</span><span class="ti-t">Free Shipping</span></div>
+  <div class="ti"><span class="ti-icon">💵</span><span class="ti-t">COD Available</span></div>
+  <div class="ti"><span class="ti-icon">🎨</span><span class="ti-t">Original Artwork</span></div>
+  <div class="ti"><span class="ti-icon">📦</span><span class="ti-t">Pan India Delivery</span></div>
+  <div class="ti"><span class="ti-icon">↩️</span><span class="ti-t">Easy Returns</span></div>
+</div>
+
+<!-- ── WELCOME SECTION ── -->
+<div class="welcome" id="about">
+  <div class="wc-inner">
+    <div class="wc-tag">Welcome to ZeroByZ</div>
+    <h2 class="wc-h2">CLOTHES THAT<br><span>MEAN SOMETHING</span></h2>
+    <p class="wc-body">
+      A clothing brand from Ahmedabad that <strong>started from zero</strong> — just like all big things do!<br>
+      Our every design has a meaning and a little story behind it.<br>
+      Our designs are like <strong>secret messages</strong> — look closely, and you'll find something special in each one.
+    </p>
+    <div class="wc-icons">
+      <div class="wc-icon"><span class="wi-num">28</span><div class="wi-lbl">Products</div></div>
+      <div class="wc-icon"><span class="wi-num">100%</span><div class="wi-lbl">Original Art</div></div>
+      <div class="wc-icon"><span class="wi-num">FREE</span><div class="wi-lbl">Shipping</div></div>
+      <div class="wc-icon"><span class="wi-num">COD</span><div class="wi-lbl">Available</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ALL PRODUCTS ── -->
+<section class="psec" id="products">
+  <div class="wrap">
+    <div class="sec-hd">
+      <div class="sec-t">ALL <span>PRODUCTS</span></div>
+      <span class="sec-a">28 Drops</span>
+    </div>
+    <div class="filters">
+      <button class="fb on" onclick="filter('all',this)">All (28)</button>
+      <button class="fb" onclick="filter('kurta',this)">Kurtas</button>
+      <button class="fb" onclick="filter('tee',this)">Tees</button>
+      <button class="fb" onclick="filter('pant',this)">Pants</button>
+      <button class="fb" onclick="filter('shirt',this)">Shirts</button>
+      <button class="fb" onclick="filter('in',this)">In Stock</button>
+      <button class="fb" onclick="filter('out',this)">Sold Out</button>
+    </div>
+    <div class="pgrid" id="grid">
+
+      <!-- MESSY KURTA ORANGE -->
+      <div class="pc" data-t="kurta" data-s="in" id="kurtas">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/01_27a0c5ef-2fb2-4b5f-bdae-11c5aec02383.png?v=1754114153&width=640" alt="Messy Kurta Orange" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>MESSY KURTA<br>ORANGE</span></div>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Kurtas</div>
+          <div class="pc-name">MESSY KURTA — Orange</div>
+          <div class="pc-price">Rs. 1,550</div>
+          <div class="pc-sizes">S · M · L · XL</div>
+        </div>
+      </div>
+
+      <!-- MESSY KURTA BLUE -->
+      <div class="pc" data-t="kurta" data-s="in">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/01_8bc7005c-430e-4c99-94ea-b4bb31786ba1.png?v=1751052367&width=640" alt="Messy Kurta Blue" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>MESSY KURTA<br>BLUE</span></div>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Kurtas</div>
+          <div class="pc-name">MESSY KURTA — Blue</div>
+          <div class="pc-price">Rs. 1,550</div>
+          <div class="pc-sizes">S · M · L · XL</div>
+        </div>
+      </div>
+
+      <!-- MESSY KURTA OFF WHITE -->
+      <div class="pc" data-t="kurta" data-s="in">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/01_e388215a-62e3-4b3b-a5db-4b0cfbd2392d.png?v=1751313371&width=640" alt="Messy Kurta Off White" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>MESSY KURTA<br>OFF WHITE</span></div>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Kurtas</div>
+          <div class="pc-name">MESSY KURTA — Off White</div>
+          <div class="pc-price">Rs. 1,550</div>
+          <div class="pc-sizes">S · M · L · XL</div>
+        </div>
+      </div>
+
+      <!-- FREE HUG WHITE -->
+      <div class="pc" data-t="tee" data-s="in" id="tees">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/0-01-NEW2_1.png?v=1756617191&width=640" alt="Free Hug White" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>FREE HUG<br>WHITE</span></div>
+          <span class="pbadge b-new">New</span>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Tees</div>
+          <div class="pc-name">FREE HUG — White</div>
+          <div class="pc-price">Rs. 1,850</div>
+          <div class="pc-sizes">S · M · L · XL</div>
+        </div>
+      </div>
+
+      <!-- FREEHUG BLACK -->
+      <div class="pc" data-t="tee" data-s="in">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/01-01_54a265ea-ce5c-475b-a461-94cf2668de69.png?v=1742302083&width=640" alt="Freehug Black" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>FREEHUG<br>BLACK</span></div>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Tees</div>
+          <div class="pc-name">FREEHUG — Black</div>
+          <div class="pc-price">Rs. 1,850</div>
+          <div class="pc-sizes">S · M · L · XL</div>
+        </div>
+      </div>
+
+      <!-- FREEHUG BROWN -->
+      <div class="pc" data-t="tee" data-s="out">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/01-02_2e1e0d2f-7323-4b51-886b-03d8d7bc2260.png?v=1742289965&width=640" alt="Freehug Brown" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>FREEHUG<br>BROWN</span></div>
+          <span class="pbadge b-sold">Sold Out</span>
+        </div>
+        <div class="pc-hov"><button class="pc-ntf">Notify Me</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Tees</div>
+          <div class="pc-name">FREEHUG — Brown</div>
+          <div class="pc-price">Rs. 1,850</div>
+          <div class="pc-notify">📩 Notify me when back →</div>
+        </div>
+      </div>
+
+      <!-- ONLY PLAN Z BAGGY PANT -->
+      <div class="pc" data-t="pant" data-s="out" id="pants">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/NEWB1.png?v=1770054547&width=640" alt="Only Plan Z Baggy Pant" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>ONLY PLAN Z<br>BAGGY PANT</span></div>
+          <span class="pbadge b-sold">Sold Out</span>
+        </div>
+        <div class="pc-hov"><button class="pc-ntf">Notify Me</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Pants</div>
+          <div class="pc-name">ONLY PLAN Z — Baggy Pant</div>
+          <div class="pc-price">Rs. 2,468</div>
+          <div class="pc-notify">📩 Notify me when back →</div>
+        </div>
+      </div>
+
+      <!-- ONLY PLAN Z FULL SLEEVE TEE -->
+      <div class="pc" data-t="tee" data-s="out">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/NEWBACK.png?v=1770053554&width=640" alt="Only Plan Z Full Sleeve Tee" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>ONLY PLAN Z<br>FULL SLEEVE TEE</span></div>
+          <span class="pbadge b-sold">Sold Out</span>
+        </div>
+        <div class="pc-hov"><button class="pc-ntf">Notify Me</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Tees</div>
+          <div class="pc-name">ONLY PLAN Z — Full Sleeve Tee</div>
+          <div class="pc-price">Rs. 2,468</div>
+          <div class="pc-notify">📩 Notify me when back →</div>
+        </div>
+      </div>
+
+      <!-- NEVER BEEN NORMAL BAGGY BLACK PANT -->
+      <div class="pc" data-t="pant" data-s="in">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/01_58fc2ac8-a711-43ba-8d0d-aa72b8e5bb92.webp?v=1759815323&width=640" alt="Never Been Normal Baggy Pant" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>NEVER BEEN NORMAL<br>BAGGY BLACK PANT</span></div>
+          <span class="pbadge b-new">New</span>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Pants</div>
+          <div class="pc-name">NEVER BEEN NORMAL — Baggy Pant</div>
+          <div class="pc-price">Rs. 2,299</div>
+          <div class="pc-sizes">S · M · L · XL</div>
+        </div>
+      </div>
+
+      <!-- NEVER BEEN NORMAL FULL SLEEVE TEE -->
+      <div class="pc" data-t="tee" data-s="in">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/02_fc148a86-1823-4b9a-a286-3f8155624bac.webp?v=1765651218&width=640" alt="Never Been Normal Full Sleeve Tee" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>NEVER BEEN NORMAL<br>FULL SLEEVE TEE</span></div>
+          <span class="pbadge b-new">New</span>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Tees</div>
+          <div class="pc-name">NEVER BEEN NORMAL — Full Sleeve Tee</div>
+          <div class="pc-price">Rs. 2,199</div>
+          <div class="pc-sizes">S · M · L · XL · 2XL</div>
+        </div>
+      </div>
+
+      <!-- DON'T BE FOOLED BAGGY PANT -->
+      <div class="pc" data-t="pant" data-s="in">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/01_ad162c19-b1cd-4fd1-a51f-11124142e153.webp?v=1759814616&width=640" alt="Dont Be Fooled Baggy Pant" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>DON'T BE FOOLED<br>BAGGY PANT</span></div>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Pants</div>
+          <div class="pc-name">DON'T BE FOOLED — Baggy Pant</div>
+          <div class="pc-price">Rs. 2,299</div>
+          <div class="pc-sizes">S · M · L · XL</div>
+        </div>
+      </div>
+
+      <!-- DON'T BE FOOLED FULL SLEEVE TEE -->
+      <div class="pc" data-t="tee" data-s="in">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/02.webp?v=1765651265&width=640" alt="Dont Be Fooled Full Sleeve Tee" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>DON'T BE FOOLED<br>FULL SLEEVE TEE</span></div>
+          <span class="pbadge b-new">New</span>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Tees</div>
+          <div class="pc-name">DON'T BE FOOLED — Full Sleeve Tee</div>
+          <div class="pc-price">Rs. 2,199</div>
+          <div class="pc-sizes">S · M · L · XL · 2XL</div>
+        </div>
+      </div>
+
+      <!-- EARTHEN EASE SHIRT -->
+      <div class="pc" data-t="shirt" data-s="in">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/01_2.png?v=1746343804&width=640" alt="Earthen Ease Shirt" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>EARTHEN EASE<br>SHIRT OLIVE</span></div>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Shirts</div>
+          <div class="pc-name">EARTHEN EASE — Dried Herb Olive</div>
+          <div class="pc-price">Rs. 2,498</div>
+          <div class="pc-sizes">S · M · L · XL</div>
+        </div>
+      </div>
+
+      <!-- BONSAI -->
+      <div class="pc" data-t="tee" data-s="in">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/01-02_2c098df4-09c5-4797-af66-07ba3586cbb2.png?v=1741776995&width=640" alt="Bonsai" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>BONSAI:<br>ART OF PATIENCE</span></div>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Tees</div>
+          <div class="pc-name">BONSAI: The Art of Patience</div>
+          <div class="pc-price">Rs. 2,498</div>
+          <div class="pc-sizes">S · M · L · XL</div>
+        </div>
+      </div>
+
+      <!-- HOW LONG IS FOREVER RED -->
+      <div class="pc" data-t="tee" data-s="in">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/01-01_f561bf41-5ef7-4902-b444-8f10f5dcc411.png?v=1744821303&width=640" alt="How Long Is Forever Red" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>HOW LONG<br>IS FOREVER? RED</span></div>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Tees</div>
+          <div class="pc-name">HOW LONG IS FOREVER? — Red</div>
+          <div class="pc-price">Rs. 1,950</div>
+          <div class="pc-sizes">S · M · L · XL</div>
+        </div>
+      </div>
+
+      <!-- FNTE DARK GRAY -->
+      <div class="pc" data-t="tee" data-s="in">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/01-02_36db5366-e0dd-4237-b57b-5c41ea1d72d2.png?v=1741777023&width=640" alt="FNTE Dark Gray" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>FNTE<br>DARK GRAY</span></div>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Tees</div>
+          <div class="pc-name">FNTE — Dark Gray</div>
+          <div class="pc-price">Rs. 1,950</div>
+          <div class="pc-sizes">S · M · L · XL</div>
+        </div>
+      </div>
+
+      <!-- SOLID RED -->
+      <div class="pc" data-t="tee" data-s="in">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/01-01_c3bb93d0-eafd-45ab-94fa-6986f709c7e7.png?v=1742290011&width=640" alt="Solid Red" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>SOLID<br>RED</span></div>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Tees</div>
+          <div class="pc-name">SOLID — Red</div>
+          <div class="pc-price">Rs. 1,499</div>
+          <div class="pc-sizes">S · M · L · XL</div>
+        </div>
+      </div>
+
+      <!-- SOLID BLUE -->
+      <div class="pc" data-t="tee" data-s="in">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/01-01_c5d57999-57c6-4f7b-88ad-2272f5b1a843.png?v=1742290004&width=640" alt="Solid Blue" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>SOLID<br>BLUE</span></div>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Tees</div>
+          <div class="pc-name">SOLID — Blue</div>
+          <div class="pc-price">Rs. 1,499</div>
+          <div class="pc-sizes">S · M · L · XL</div>
+        </div>
+      </div>
+
+      <!-- NO FROGS GIVEN BLACK -->
+      <div class="pc" data-t="tee" data-s="in">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/01-02_d361b27c-b730-49dd-9d0a-4d242c23f8cb.png?v=1742289960&width=640" alt="No Frogs Given Black" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>NO FROGS GIVEN<br>BLACK</span></div>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Tees</div>
+          <div class="pc-name">NO FROGS GIVEN — Black</div>
+          <div class="pc-price">Rs. 2,168</div>
+          <div class="pc-sizes">S · M · L · XL</div>
+        </div>
+      </div>
+
+      <!-- NO FROGS GIVEN OFF WHITE -->
+      <div class="pc" data-t="tee" data-s="in">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/RAW-BONSAI-FNTE-HLIF-01.png?v=1742289952&width=640" alt="No Frogs Given Off White" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>NO FROGS GIVEN<br>OFF WHITE</span></div>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Tees</div>
+          <div class="pc-name">NO FROGS GIVEN — Off White</div>
+          <div class="pc-price">Rs. 2,168</div>
+          <div class="pc-sizes">S · M · L · XL</div>
+        </div>
+      </div>
+
+      <!-- GEN-Z BROWN -->
+      <div class="pc" data-t="tee" data-s="in">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/01-03_0d93ac96-1c31-4029-b1a6-63428c4665a4.png?v=1742289946&width=640" alt="Gen-Z Brown" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>GEN-Z<br>BROWN</span></div>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Tees</div>
+          <div class="pc-name">GEN-Z — Brown</div>
+          <div class="pc-price">Rs. 1,950</div>
+          <div class="pc-sizes">S · M · L · XL</div>
+        </div>
+      </div>
+
+      <!-- GEN-Z OFF WHITE -->
+      <div class="pc" data-t="tee" data-s="in">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/01-01_12df91a3-340f-4608-9a11-c86c479b1de7.png?v=1742289941&width=640" alt="Gen-Z Off White" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>GEN-Z<br>OFF WHITE</span></div>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Tees</div>
+          <div class="pc-name">GEN-Z — Off White</div>
+          <div class="pc-price">Rs. 1,950</div>
+          <div class="pc-sizes">S · M · L · XL</div>
+        </div>
+      </div>
+
+      <!-- NEVER ENDING SAGE GREEN -->
+      <div class="pc" data-t="tee" data-s="in">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/01-02_58a040b8-78fb-456a-97e1-80bef511f431.png?v=1742289931&width=640" alt="Never Ending Sage Green" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>NEVER ENDING<br>SAGE GREEN</span></div>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Tees</div>
+          <div class="pc-name">NEVER ENDING — Sage Green</div>
+          <div class="pc-price">Rs. 2,498</div>
+          <div class="pc-sizes">S · M · L · XL</div>
+        </div>
+      </div>
+
+      <!-- NEVER ENDING LILAC PURPLE -->
+      <div class="pc" data-t="tee" data-s="in">
+        <div class="pc-img">
+          <img src="https://www.zerobyz.com/cdn/shop/files/01-02.png?v=1742289916&width=640" alt="Never Ending Lilac Purple" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pfb" style="display:none"><span>NEVER ENDING<br>LILAC PURPLE</span></div>
+        </div>
+        <div class="pc-hov"><button class="pc-atc">Add to Cart</button></div>
+        <div class="pc-info">
+          <div class="pc-cat">Tees</div>
+          <div class="pc-name">NEVER ENDING — Lilac Purple</div>
+          <div class="pc-price">Rs. 2,498</div>
+          <div class="pc-sizes">S · M · L · XL</div>
+        </div>
+      </div>
+
+    </div><!-- end grid -->
+  </div>
+</section>
+
+<!-- ── BE A PART OF A COMMUNITY ── -->
+<section class="comm" id="community">
+  <div class="comm-in">
+    <div class="comm-tag">✦ Join The Movement ✦</div>
+    <h2 class="comm-h2">BE A PART OF<br>A <span>COMMUNITY</span></h2>
+    <p class="comm-p">ZeroByZ is more than a clothing brand — it's a community of people who think differently, dress with meaning, and started from zero. Join thousands of people who wear their story every day.</p>
+    <div class="comm-stats">
+      <div class="cs"><span class="cs-v">10K+</span><div class="cs-l">Community Members</div></div>
+      <div class="cs"><span class="cs-v">28</span><div class="cs-l">Unique Designs</div></div>
+      <div class="cs"><span class="cs-v">100%</span><div class="cs-l">Original Artwork</div></div>
+    </div>
+    <div class="comm-form">
+      <input class="comm-inp" type="email" placeholder="Enter your email address">
+      <button class="comm-btn">Join Now →</button>
+    </div>
+    <div class="comm-note">Get early access to new drops · No spam ever</div>
+    <div class="soc-links" style="margin-top:28px">
+      <a href="https://www.instagram.com/_zerobyz" class="soc-link" target="_blank">📸 Instagram</a>
+      <a href="https://www.youtube.com/@Zerobyzz" class="soc-link" target="_blank">▶ YouTube</a>
+      <a href="https://pin.it/4TyQ1Rurm" class="soc-link" target="_blank">📌 Pinterest</a>
+      <a href="https://www.linkedin.com/company/zerobyz/" class="soc-link" target="_blank">💼 LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── BRAND STORY ── -->
+<section class="brand-sec" id="story">
+  <div class="wrap">
+    <div class="brand-grid">
+      <div class="bl">
+        <div class="b-label">Our Story</div>
+        <h2 class="b-h2">BORN<br>FROM<br>ZERO.</h2>
+        <p class="b-body">ZeroByZ started in Ahmedabad with nothing but an idea and a belief — that real things always start from zero. Every design we make carries a message, a meaning, a story hidden in plain sight.<br><br>Our designs are like <strong style="color:var(--white)">secret messages</strong> — look closely and you'll find something special in each one. We're not just selling clothes. We're sharing a perspective.</p>
+        <button class="btn-p" style="font-size:12px;padding:13px 28px">Read Full Story →</button>
+      </div>
+      <div class="br">
+        <div class="b-vis">
+          <div class="bv-big">Z</div>
+          <div class="bv-t2">
+            <div class="bv-t2-sub">Founded</div>
+            <div class="bv-t2-val">Ahmedabad, India</div>
+          </div>
+          <div class="bv-tag">Started from Zero</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STORE AUDIT ── -->
+<section class="audit-sec" id="audit">
+  <div class="wrap">
+    <div class="audit-head">
+      <div class="sec-t" style="display:block;text-align:center">STORE <span>PROBLEMS</span> & FIXES</div>
+      <p style="font-size:14px;color:var(--muted);margin-top:12px;text-align:center">Real issues found on zerobyz.com with proof and solutions</p>
+    </div>
+    <div class="audit-scores">
+      <div class="as"><span class="as-v" style="color:var(--red)">5</span><div class="as-l">Critical</div></div>
+      <div class="as"><span class="as-v" style="color:var(--amber)">4</span><div class="as-l">Medium</div></div>
+      <div class="as"><span class="as-v" style="color:var(--green)">3</span><div class="as-l">Quick Wins</div></div>
+      <div class="as"><span class="as-v" style="color:var(--white)">28</span><div class="as-l">Products</div></div>
+      <div class="as"><span class="as-v" style="color:var(--plite)">4.8</span><div class="as-l">CRO Score/10</div></div>
+    </div>
+    <div class="issues-grid">
+
+      <div class="iss" onclick="tog(this)">
+        <div class="iss-top"><span class="ibadge bh">Critical</span><div class="iss-t">Legal pages in main navigation</div><div class="iss-arr">›</div></div>
+        <div class="iss-body">
+          <div class="proof">Current nav: HOME · SHOP ALL · <strong>SHIPPING POLICY · RETURNS · TERMS · PRIVACY</strong> · ABOUT · CONTACT — legal pages sit alongside the shop as top-level nav items</div>
+          <p>This makes the brand look like a generic dropship store. Legal pages should live in the footer ONLY — never in the main navigation.</p>
+          <div class="cmp">
+            <div class="cb"><div class="cl">❌ Current</div><p>Terms, Privacy, Shipping all in main nav</p></div>
+            <div class="cg"><div class="cl">✅ Fixed (this redesign)</div><p>Clean 7-item nav: Home, Shop, Kurtas, Tees, Pants, Community, Story</p></div>
+          </div>
+          <div class="fixes"><span class="fx">Move all legal to footer only</span><span class="fx">Add category nav links</span></div>
+        </div>
+      </div>
+
+      <div class="iss" onclick="tog(this)">
+        <div class="iss-top"><span class="ibadge bh">Critical</span><div class="iss-t">Zero reviews on any product</div><div class="iss-arr">›</div></div>
+        <div class="iss-body">
+          <div class="proof">Visited <strong>DON'T BE FOOLED Full Sleeve Tee (Rs. 2,199)</strong> — zero reviews, zero star ratings, no testimonials anywhere on the site</div>
+          <p>For Indian streetwear shoppers, social proof is everything. No reviews = no trust = no purchase.</p>
+          <div class="fixes"><span class="fx">Install Judge.me (free)</span><span class="fx">Email all past buyers for reviews</span><span class="fx">Offer 10% off for review with photo</span></div>
+        </div>
+      </div>
+
+      <div class="iss" onclick="tog(this)">
+        <div class="iss-top"><span class="ibadge bh">Critical</span><div class="iss-t">Subscription disclaimer on regular products</div><div class="iss-arr">›</div></div>
+        <div class="iss-body">
+          <div class="proof">On regular tee product page: <strong>"This item is a deferred, subscription, or recurring purchase. By continuing, I agree to the cancellation policy..."</strong> — appearing on a one-time clothing purchase</div>
+          <p>This will scare buyers away. Nobody wants to accidentally sign up for a recurring charge on a tee shirt. This is a broken subscription app configuration.</p>
+          <div class="fixes"><span class="fx">Disable subscription app on regular products</span><span class="fx">Audit all product pages for this text</span></div>
+        </div>
+      </div>
+
+      <div class="iss" onclick="tog(this)">
+        <div class="iss-top"><span class="ibadge bh">Critical</span><div class="iss-t">No size chart on product pages</div><div class="iss-arr">›</div></div>
+        <div class="iss-body">
+          <div class="proof">Product pages show size selectors (S, M, L, XL, 2XL) with <strong>no size chart, no measurements, no fit guide</strong>. Description says "BOXY FIT" but gives zero measurements</div>
+          <p>Indian sizing varies widely. Without a chart, customers guess wrong, order the wrong size, and return. Returns are expensive and avoidable with one simple popup.</p>
+          <div class="fixes"><span class="fx">Add size chart modal next to size selector</span><span class="fx">Include chest/length/shoulder measurements</span><span class="fx">Add "Boxy fit — size down" note</span></div>
+        </div>
+      </div>
+
+      <div class="iss" onclick="tog(this)">
+        <div class="iss-top"><span class="ibadge bh">Critical</span><div class="iss-t">No email/WhatsApp capture</div><div class="iss-arr">›</div></div>
+        <div class="iss-body">
+          <div class="proof"><strong>No popup, no footer form, no WhatsApp opt-in</strong> anywhere on the entire site. The only contact option is a buried contact page</div>
+          <p>For Indian Gen Z streetwear buyers, WhatsApp + email marketing has the highest ROI. Every visitor who doesn't buy immediately is a lost lead forever — no way to re-engage them.</p>
+          <div class="fixes"><span class="fx">Add Klaviyo exit-intent popup</span><span class="fx">Add WhatsApp opt-in (Interakt/DelightChat)</span><span class="fx">Offer 10% off first order for signup</span></div>
+        </div>
+      </div>
+
+      <div class="iss" onclick="tog(this)">
+        <div class="iss-top"><span class="ibadge bm">Medium</span><div class="iss-t">Sold out items show with no restock option</div><div class="iss-arr">›</div></div>
+        <div class="iss-body">
+          <div class="proof">3 products marked <strong>Sold Out</strong> on homepage with no "Notify Me" button: ONLY PLAN Z Baggy Pant (Rs. 2,468), ONLY PLAN Z Full Sleeve Tee (Rs. 2,468), Freehug Brown (Rs. 1,850)</div>
+          <div class="fixes"><span class="fx">Add Back-in-Stock notification app</span><span class="fx">Move sold-out to end of grid</span><span class="fx">Show "Notify Me" button on sold-out cards</span></div>
+        </div>
+      </div>
+
+      <div class="iss" onclick="tog(this)">
+        <div class="iss-top"><span class="ibadge bm">Medium</span><div class="iss-t">COD not shown on product pages</div><div class="iss-arr">›</div></div>
+        <div class="iss-body">
+          <div class="proof">"COD AVAILABLE" is in the announcement bar but <strong>not shown on product pages</strong> where the buying decision happens. No COD badge, no payment icons, no "pay on delivery" reassurance below Add to Cart</div>
+          <p>In India, COD is the #1 trust signal for online shopping. It's being hidden instead of celebrated.</p>
+          <div class="fixes"><span class="fx">Add COD badge below Add to Cart on all product pages</span><span class="fx">Show payment icons: COD + UPI + Cards</span></div>
+        </div>
+      </div>
+
+      <div class="iss" onclick="tog(this)">
+        <div class="iss-top"><span class="ibadge bg">Quick Win</span><div class="iss-t">No design story on product pages</div><div class="iss-arr">›</div></div>
+        <div class="iss-body">
+          <div class="proof">The brand says "every design has a meaning and a little story." But <strong>product pages don't tell that story</strong>. Only a brief product description exists. The secret message concept is completely absent on individual product pages</div>
+          <div class="fixes"><span class="fx">Add "The Story Behind This Design" section per product</span><span class="fx">2-3 lines explaining the message/meaning</span><span class="fx">This differentiates ZeroByZ from generic clothing brands</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── WHY ZEROBYZ ── -->
+<section class="why-sec">
+  <div class="wrap">
+    <div class="sec-hd"><div class="sec-t">WHY <span>ZEROBYZ</span></div></div>
+    <div class="why-grid">
+      <div class="why">
+        <div class="why-n">01</div>
+        <h4>Every Design Has a Story</h4>
+        <p>We don't make blank tees. Every piece carries a message — hidden details, bold statements, real meaning. Wear it and start a conversation.</p>
+      </div>
+      <div class="why">
+        <div class="why-n">02</div>
+        <h4>Made for the Streets of India</h4>
+        <p>Designed in Ahmedabad. Built for the way you actually live — relaxed fits, quality fabric, styles that move with you from morning to midnight.</p>
+      </div>
+      <div class="why">
+        <div class="why-n">03</div>
+        <h4>COD + Free Shipping</h4>
+        <p>Pay when it arrives at your door. We deliver pan-India with free shipping — because trust goes both ways. No risk. Just great clothes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="ft">
+    <div>
+      <div class="fl">ZERO<em>BYZ</em></div>
+      <p class="fp">A clothing brand from Ahmedabad that started from zero — just like all big things do. Every design has a meaning and a little story behind it.</p>
+    </div>
+    <div class="fc">
+      <h5>Shop</h5>
+      <a href="#">All Products (28)</a>
+      <a href="#">Tees</a>
+      <a href="#">Pants</a>
+      <a href="#">Kurtas</a>
+      <a href="#">Shirts</a>
+      <a href="#">New Arrivals</a>
+    </div>
+    <div class="fc">
+      <h5>Help</h5>
+      <a href="#">Shipping Policy</a>
+      <a href="#">Returns & Refunds</a>
+      <a href="#">Size Guide</a>
+      <a href="#">Contact Us</a>
+      <a href="#">Terms & Conditions</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+    <div class="fc">
+      <h5>Brand</h5>
+      <a href="#">About Us</a>
+      <a href="#">Our Story</a>
+      <a href="https://www.instagram.com/_zerobyz" target="_blank">Instagram</a>
+      <a href="https://www.youtube.com/@Zerobyzz" target="_blank">YouTube</a>
+      <a href="https://pin.it/4TyQ1Rurm" target="_blank">Pinterest</a>
+      <a href="https://www.linkedin.com/company/zerobyz/" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+  <div class="fb">
+    <span>© 2025 ZEROBYZ</span>
+    <span>Made with ❤ in <span class="pink">Ahmedabad</span></span>
+    <span>Powered by Shopify</span>
+  </div>
+</footer>
+
+<script>
+function filter(t, btn) {
+  document.querySelectorAll('.fb').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.pc').forEach(c => {
+    const type = c.dataset.t, status = c.dataset.s;
+    let show = t === 'all' || t === type || (t === 'in' && status === 'in') || (t === 'out' && status === 'out');
+    c.style.display = show ? 'block' : 'none';
+  });
+}
+function tog(el) { el.classList.toggle('open'); }
+</script>
+</body>
+</html>
